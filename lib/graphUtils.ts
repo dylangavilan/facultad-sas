@@ -97,3 +97,26 @@ export function materiasToFlowData(materias: Materia[]): {
 
   return { nodes, edges };
 }
+
+/** Filtra el grafo para mostrar solo el nodo seleccionado + sus correlativas (anteriores y siguientes) */
+export function filterGraphByNode(
+  nodes: Node[],
+  edges: Edge[],
+  nodeId: string
+): { nodes: Node[]; edges: Edge[] } {
+  const nodeIds = new Set<string>([nodeId]);
+
+  edges.forEach((e) => {
+    if (e.source === nodeId || e.target === nodeId) {
+      nodeIds.add(e.source);
+      nodeIds.add(e.target);
+    }
+  });
+
+  const filteredNodes = nodes.filter((n) => nodeIds.has(n.id));
+  const filteredEdges = edges.filter(
+    (e) => nodeIds.has(e.source) && nodeIds.has(e.target)
+  );
+
+  return { nodes: filteredNodes, edges: filteredEdges };
+}

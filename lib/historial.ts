@@ -9,6 +9,30 @@ export function isPendiente(situacion: Situacion): boolean {
   return !isAprobada(situacion);
 }
 
+export function isAFinal(situacion: Situacion): boolean {
+  return situacion === "A_FINAL";
+}
+
+export interface ResumenMaterias {
+  aprobadas: number;
+  pendientes: number;
+  aFinalPrevio: number;
+}
+
+export function contarMateriasPorSituacion(materias: Materia[]): ResumenMaterias {
+  let aprobadas = 0;
+  let aFinalPrevio = 0;
+  let pendientes = 0;
+
+  for (const m of materias) {
+    if (isAprobada(m.situacion)) aprobadas++;
+    else if (isAFinal(m.situacion)) aFinalPrevio++;
+    else pendientes++;
+  }
+
+  return { aprobadas, pendientes, aFinalPrevio };
+}
+
 export function filtrarMaterias(
   materias: Materia[],
   filter: "aprobadas" | "pendientes" | "todas"

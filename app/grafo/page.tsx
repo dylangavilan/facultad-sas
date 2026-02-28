@@ -18,7 +18,8 @@ export default function GrafoPage() {
       <StudentHeader student={student} />
       <div className="mb-4 text-sm text-notion-text-secondary">
         Vista de correlativas: cada flecha indica que la materia de origen es
-        prerrequisito de la materia de destino.
+        prerrequisito de la materia de destino. Hacé clic en una materia para
+        seleccionarla y ver solo sus correlativas.
       </div>
       <CorrelativasGraph materias={materias} />
     </>
