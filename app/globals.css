@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --notion-bg: rgb(251, 251, 250);
+  --notion-border: rgb(233, 233, 231);
+  --notion-text: rgb(55, 53, 47);
+  --notion-text-secondary: rgb(120, 119, 116);
+}
+
+body {
+  background: var(--notion-bg);
+  color: var(--notion-text);
+}
