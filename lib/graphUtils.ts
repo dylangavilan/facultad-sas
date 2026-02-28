@@ -1,4 +1,4 @@
-import type { Node, Edge } from "@xyflow/react";
+import { Position, type Node, type Edge } from "@xyflow/react";
 import type { Materia } from "@/types/historial";
 
 const AÑO_ORDER: Record<string, number> = {
@@ -61,6 +61,8 @@ export function materiasToFlowData(materias: Materia[]): {
         id: m.codigo,
         type: "materiaNode",
         position: { x, y },
+        sourcePosition: Position.Right,
+        targetPosition: Position.Left,
         data: {
           label: m.nombre,
           codigo: m.codigo,
@@ -76,11 +78,18 @@ export function materiasToFlowData(materias: Materia[]): {
         const edgeKey = `${codCorr}-${m.codigo}`;
         if (seenEdges.has(edgeKey)) return;
         seenEdges.add(edgeKey);
+        const edgeColor = getSituacionColor(m.situacion);
         edges.push({
           id: edgeKey,
           source: codCorr,
           target: m.codigo,
           type: "smoothstep",
+          animated: true,
+          style: {
+            stroke: edgeColor,
+            strokeWidth: 2.5,
+          },
+          zIndex: 0,
         });
       });
     });

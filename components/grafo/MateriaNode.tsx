@@ -1,7 +1,7 @@
 "use client";
 
 import { memo } from "react";
-import type { NodeProps } from "@xyflow/react";
+import { Handle, Position, type NodeProps } from "@xyflow/react";
 
 export const MateriaNode = memo(function MateriaNode({
   data,
@@ -37,6 +37,8 @@ export const MateriaNode = memo(function MateriaNode({
         </span>
         {nota != null && <span>Nota: {nota}</span>}
       </div>
+      <Handle type="target" position={Position.Left} className="!w-2 !h-2 !border-2" style={{ borderColor: color, backgroundColor: "white" }} />
+      <Handle type="source" position={Position.Right} className="!w-2 !h-2 !border-2" style={{ borderColor: color, backgroundColor: "white" }} />
     </div>
   );
 });

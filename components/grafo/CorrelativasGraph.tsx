@@ -48,6 +48,9 @@ export function CorrelativasGraph({ materias }: CorrelativasGraphProps) {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         nodeTypes={nodeTypes}
+        defaultEdgeOptions={{
+          style: { strokeWidth: 2.5 },
+        }}
         fitView
         attributionPosition="bottom-left"
       >
