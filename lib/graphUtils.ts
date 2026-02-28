@@ -1,5 +1,46 @@
+import dagre from "@dagrejs/dagre";
 import { Position, type Node, type Edge } from "@xyflow/react";
 import type { Materia } from "@/types/historial";
+
+export const OBSIDIAN_NODE_WIDTH = 140;
+export const OBSIDIAN_NODE_HEIGHT = 32;
+
+const dagreGraph = new dagre.graphlib.Graph().setDefaultEdgeLabel(() => ({}));
+
+export function applyDagreLayout(
+  nodes: Node[],
+  edges: Edge[],
+  direction: "TB" | "LR" = "LR"
+): Node[] {
+  dagreGraph.setGraph({ rankdir: direction, nodesep: 40, ranksep: 60 });
+  const isHorizontal = direction === "LR";
+
+  nodes.forEach((node) => {
+    dagreGraph.setNode(node.id, {
+      width: OBSIDIAN_NODE_WIDTH,
+      height: OBSIDIAN_NODE_HEIGHT,
+    });
+  });
+
+  edges.forEach((edge) => {
+    dagreGraph.setEdge(edge.source, edge.target);
+  });
+
+  dagre.layout(dagreGraph);
+
+  return nodes.map((node) => {
+    const pos = dagreGraph.node(node.id);
+    return {
+      ...node,
+      position: {
+        x: pos.x - OBSIDIAN_NODE_WIDTH / 2,
+        y: pos.y - OBSIDIAN_NODE_HEIGHT / 2,
+      },
+      sourcePosition: isHorizontal ? Position.Right : Position.Bottom,
+      targetPosition: isHorizontal ? Position.Left : Position.Top,
+    };
+  });
+}
 
 const AÑO_ORDER: Record<string, number> = {
   PRIMER_AÑO: 0,
@@ -14,7 +55,22 @@ const AÑO_ORDER: Record<string, number> = {
 const LAYER_WIDTH = 280;
 const LAYER_HEIGHT = 120;
 
-function getSituacionColor(situacion: string): string {
+function getSituacionColor(situacion: string, obsidian = false): string {
+  if (obsidian) {
+    switch (situacion) {
+      case "PROMOCIONA":
+      case "APROBADO":
+      case "EQUIV_INTERNA":
+        return "#4ade80";
+      case "A_FINAL":
+      case "INSCRIPTO":
+        return "#fbbf24";
+      case "RECURSA":
+        return "#f472b6";
+      default:
+        return "#c084fc";
+    }
+  }
   switch (situacion) {
     case "PROMOCIONA":
     case "APROBADO":
@@ -30,10 +86,10 @@ function getSituacionColor(situacion: string): string {
   }
 }
 
-export function materiasToFlowData(materias: Materia[]): {
-  nodes: Node[];
-  edges: Edge[];
-} {
+export function materiasToFlowData(
+  materias: Materia[],
+  obsidian = false
+): { nodes: Node[]; edges: Edge[] } {
   const byCodigo = new Map(materias.map((m) => [m.codigo, m]));
   const byAño = new Map<string, Materia[]>();
 
@@ -69,7 +125,8 @@ export function materiasToFlowData(materias: Materia[]): {
           situacion: m.situacion,
           nota: m.nota,
           horas: m.horas,
-          color: getSituacionColor(m.situacion),
+          color: getSituacionColor(m.situacion, obsidian),
+          obsidian,
         },
       });
 
@@ -78,16 +135,16 @@ export function materiasToFlowData(materias: Materia[]): {
         const edgeKey = `${codCorr}-${m.codigo}`;
         if (seenEdges.has(edgeKey)) return;
         seenEdges.add(edgeKey);
-        const edgeColor = getSituacionColor(m.situacion);
+        const edgeColor = getSituacionColor(m.situacion, obsidian);
         edges.push({
           id: edgeKey,
           source: codCorr,
           target: m.codigo,
           type: "smoothstep",
-          animated: true,
+          animated: !obsidian,
           style: {
-            stroke: edgeColor,
-            strokeWidth: 2.5,
+            stroke: obsidian ? "#64748b" : edgeColor,
+            strokeWidth: obsidian ? 1 : 2.5,
           },
           zIndex: 0,
         });

@@ -19,7 +19,9 @@ export default function GrafoPage() {
       <div className="mb-4 text-sm text-notion-text-secondary">
         Vista de correlativas: cada flecha indica que la materia de origen es
         prerrequisito de la materia de destino. Hacé clic en una materia para
-        seleccionarla y ver solo sus correlativas.
+        seleccionarla y ver solo sus correlativas. Usá{" "}
+        <strong>Vista Obsidian</strong> para un grafo estilo mapa mental con
+        fondo oscuro.
       </div>
       <CorrelativasGraph materias={materias} />
     </>
