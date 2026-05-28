@@ -25,6 +25,8 @@ export type Anio =
   | "OPTATIVAS"
   | "ANEXO";
 
+export type Cuatrimestre = 1 | 2;
+
 export interface Materia {
   codigo: string;
   nombre: string;
@@ -32,6 +34,7 @@ export interface Materia {
   situacion: Situacion;
   nota?: number;
   año: Anio;
+  cuatrimestre: Cuatrimestre;
   correlativas?: string[];
 }
 

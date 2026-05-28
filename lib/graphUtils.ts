@@ -2,8 +2,10 @@ import dagre from "@dagrejs/dagre";
 import { Position, type Node, type Edge } from "@xyflow/react";
 import type { Materia } from "@/types/historial";
 
-export const OBSIDIAN_NODE_WIDTH = 140;
-export const OBSIDIAN_NODE_HEIGHT = 32;
+export const OBSIDIAN_NODE_WIDTH = 160;
+export const OBSIDIAN_NODE_HEIGHT = 40;
+export const GRID_NODE_WIDTH = 200;
+export const GRID_NODE_HEIGHT = 120;
 
 const dagreGraph = new dagre.graphlib.Graph().setDefaultEdgeLabel(() => ({}));
 
@@ -52,38 +54,38 @@ const AÑO_ORDER: Record<string, number> = {
   ANEXO: 6,
 };
 
-const LAYER_WIDTH = 280;
-const LAYER_HEIGHT = 120;
+// Grid layout: 5 materias por cuatrimestre
+const COLS_PER_CUATRIMESTRE = 5;
+const CELL_WIDTH = 220;        // Ancho de cada celda
+const CELL_HEIGHT = 130;       // Alto de cada celda
+const CUATRIMESTRE_GAP = 280;  // Espacio entre cuatrimestres horizontalmente
+const YEAR_GAP = 700;          // Espacio entre años horizontalmente
+const YEAR_HEIGHT = 350;       // Alto asignado a cada año
+
+const SITUACION_COLOR: Record<string, string> = {
+  PROMOCIONA: "#10b981",       // Esmeralda
+  APROBADO: "#10b981",
+  EQUIV_INTERNA: "#10b981",
+  A_FINAL: "#f59e0b",          // Ámbar
+  INSCRIPTO: "#3b82f6",        // Azul
+  RECURSA: "#ef4444",          // Rojo
+};
+
+const SITUACION_COLOR_OBSIDIAN: Record<string, string> = {
+  PROMOCIONA: "#34d399",       // Esmeralda brillante
+  APROBADO: "#34d399",
+  EQUIV_INTERNA: "#34d399",
+  A_FINAL: "#fbbf24",          // Ámbar brillante
+  INSCRIPTO: "#60a5fa",        // Azul brillante
+  RECURSA: "#f87171",          // Rojo brillante
+};
+
+const DEFAULT_COLOR = "#64748b"; // Gris pizarra
+const DEFAULT_COLOR_OBSIDIAN = "#a78bfa"; // Violeta para optativas en Obsidian
 
 function getSituacionColor(situacion: string, obsidian = false): string {
-  if (obsidian) {
-    switch (situacion) {
-      case "PROMOCIONA":
-      case "APROBADO":
-      case "EQUIV_INTERNA":
-        return "#4ade80";
-      case "A_FINAL":
-      case "INSCRIPTO":
-        return "#fbbf24";
-      case "RECURSA":
-        return "#f472b6";
-      default:
-        return "#c084fc";
-    }
-  }
-  switch (situacion) {
-    case "PROMOCIONA":
-    case "APROBADO":
-    case "EQUIV_INTERNA":
-      return "#22c55e";
-    case "A_FINAL":
-    case "INSCRIPTO":
-      return "#f59e0b";
-    case "RECURSA":
-      return "#ef4444";
-    default:
-      return "#9ca3af";
-  }
+  const map = obsidian ? SITUACION_COLOR_OBSIDIAN : SITUACION_COLOR;
+  return map[situacion] ?? (obsidian ? DEFAULT_COLOR_OBSIDIAN : DEFAULT_COLOR);
 }
 
 export function materiasToFlowData(
@@ -107,46 +109,73 @@ export function materiasToFlowData(
   const edges: Edge[] = [];
   const seenEdges = new Set<string>();
 
-  añosOrdenados.forEach((año, layerIndex) => {
-    const list = byAño.get(año) ?? [];
-    list.forEach((m, i) => {
-      const x = layerIndex * LAYER_WIDTH + 50;
-      const y = i * LAYER_HEIGHT + 40;
+  añosOrdenados.forEach((año, yearIndex) => {
+    const list = (byAño.get(año) ?? []).sort(
+      (a, b) =>
+        a.cuatrimestre - b.cuatrimestre ||
+        a.nombre.localeCompare(b.nombre, "es")
+    );
 
-      nodes.push({
-        id: m.codigo,
-        type: "materiaNode",
-        position: { x, y },
-        sourcePosition: Position.Right,
-        targetPosition: Position.Left,
-        data: {
-          label: m.nombre,
-          codigo: m.codigo,
-          situacion: m.situacion,
-          nota: m.nota,
-          horas: m.horas,
-          color: getSituacionColor(m.situacion, obsidian),
-          obsidian,
-        },
-      });
+    // Separar por cuatrimestre
+    const byC = new Map<number, Materia[]>();
+    for (const m of list) {
+      const c = m.cuatrimestre;
+      if (!byC.has(c)) byC.set(c, []);
+      byC.get(c)!.push(m);
+    }
 
-      (m.correlativas ?? []).forEach((codCorr) => {
-        if (!byCodigo.has(codCorr)) return;
-        const edgeKey = `${codCorr}-${m.codigo}`;
-        if (seenEdges.has(edgeKey)) return;
-        seenEdges.add(edgeKey);
-        const edgeColor = getSituacionColor(m.situacion, obsidian);
-        edges.push({
-          id: edgeKey,
-          source: codCorr,
-          target: m.codigo,
-          type: "smoothstep",
-          animated: !obsidian,
-          style: {
-            stroke: obsidian ? "#64748b" : edgeColor,
-            strokeWidth: obsidian ? 1 : 2.5,
+    // Posicionar en grid: 5 columnas por cuatrimestre
+    let yearOffset = yearIndex * YEAR_GAP;
+    let maxYForYear = 0;
+
+    [1, 2].forEach((c) => {
+      const cuatrimestraMateria = byC.get(c) ?? [];
+      const xBase = yearOffset + (c === 1 ? 0 : CUATRIMESTRE_GAP);
+
+      cuatrimestraMateria.forEach((m, index) => {
+        const col = index % COLS_PER_CUATRIMESTRE;
+        const row = Math.floor(index / COLS_PER_CUATRIMESTRE);
+
+        const x = xBase + col * CELL_WIDTH;
+        const y = row * CELL_HEIGHT;
+        maxYForYear = Math.max(maxYForYear, y);
+
+        nodes.push({
+          id: m.codigo,
+          type: "materiaNode",
+          position: { x, y },
+          sourcePosition: Position.Right,
+          targetPosition: Position.Left,
+          data: {
+            label: m.nombre,
+            codigo: m.codigo,
+            situacion: m.situacion,
+            nota: m.nota,
+            horas: m.horas,
+            cuatrimestre: m.cuatrimestre,
+            color: getSituacionColor(m.situacion, obsidian),
+            obsidian,
           },
-          zIndex: 0,
+        });
+
+        (m.correlativas ?? []).forEach((codCorr) => {
+          if (!byCodigo.has(codCorr)) return;
+          const edgeKey = `${codCorr}-${m.codigo}`;
+          if (seenEdges.has(edgeKey)) return;
+          seenEdges.add(edgeKey);
+          const edgeColor = getSituacionColor(m.situacion, obsidian);
+          edges.push({
+            id: edgeKey,
+            source: codCorr,
+            target: m.codigo,
+            type: "smoothstep",
+            animated: !obsidian && ["A_FINAL", "INSCRIPTO"].includes(m.situacion),
+            style: {
+              stroke: obsidian ? "#334155" : `${edgeColor}a5`,
+              strokeWidth: obsidian ? 1.5 : 3.5,
+            },
+            zIndex: 0,
+          });
         });
       });
     });

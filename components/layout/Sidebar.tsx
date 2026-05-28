@@ -5,8 +5,12 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 const navItems = [
-  { href: "/", label: "Historial" },
-  { href: "/grafo", label: "Grafo de correlativas" },
+  { href: "/", label: "Historial", description: "Resumen de materias" },
+  {
+    href: "/carrer-roadmap",
+    label: "Malla curricular",
+    description: "Plan de estudios interactivo",
+  },
 ];
 
 export function Sidebar({ studentName }: { studentName?: string }) {
@@ -15,19 +19,19 @@ export function Sidebar({ studentName }: { studentName?: string }) {
 
   return (
     <aside
-      className={`flex flex-col border-r border-notion-border bg-white transition-all duration-200 ${
-        collapsed ? "w-16" : "w-56"
+      className={`flex flex-col border-r border-slate-900 bg-[#070b13]/85 backdrop-blur-xl text-slate-200 transition-all duration-300 shrink-0 ${
+        collapsed ? "w-20" : "w-64"
       }`}
     >
-      <div className="flex h-14 items-center gap-2 border-b border-notion-border px-4">
+      <div className="flex h-16 items-center gap-2 border-b border-slate-900/60 px-4">
         <button
           type="button"
           onClick={() => setCollapsed(!collapsed)}
-          className="rounded p-2 hover:bg-gray-100"
-          aria-label={collapsed ? "Expandir" : "Colapsar"}
+          className="rounded-lg p-2 text-slate-400 hover:bg-slate-800/40 hover:text-slate-100 transition-colors"
+          aria-label={collapsed ? "Expandir navegación" : "Colapsar navegación"}
         >
           <svg
-            className={`h-5 w-5 transition-transform ${collapsed ? "rotate-180" : ""}`}
+            className={`h-5 w-5 transition-transform duration-300 ${collapsed ? "rotate-180" : ""}`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -40,40 +44,75 @@ export function Sidebar({ studentName }: { studentName?: string }) {
             />
           </svg>
         </button>
+
         {!collapsed && (
-          <span className="font-medium text-notion-text">Historial SAS</span>
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-tr from-sky-400 to-blue-600 text-xs font-bold text-white shadow-lg shadow-blue-500/10">
+              FS
+            </div>
+            <div className="flex flex-col">
+              <span className="text-sm font-bold leading-tight tracking-wide bg-gradient-to-r from-slate-100 to-slate-300 bg-clip-text text-transparent">
+                Facultad SAS
+              </span>
+              <span className="text-[10px] text-slate-500 font-medium">
+                Panel Académico
+              </span>
+            </div>
+          </div>
         )}
       </div>
 
-      <nav className="flex-1 space-y-0.5 p-2">
+      <nav className="flex-1 space-y-1.5 px-3 py-6">
         {navItems.map((item) => {
           const isActive = pathname === item.href;
           return (
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors ${
+              className={`group relative flex items-center gap-3.5 rounded-xl px-3 py-3 text-sm font-medium transition-all duration-200 ${
                 isActive
-                  ? "bg-gray-100 text-notion-text"
-                  : "text-notion-text-secondary hover:bg-gray-50 hover:text-notion-text"
+                  ? "bg-slate-800/40 text-sky-400 border-l-2 border-sky-500 shadow-[inset_0_0_12px_rgba(56,189,248,0.03)]"
+                  : "text-slate-400 hover:bg-slate-800/20 hover:text-slate-200 border-l-2 border-transparent"
               }`}
             >
               {item.href === "/" ? (
-                <ListIcon className="h-4 w-4 shrink-0" />
+                <ListIcon
+                  className={`h-4.5 w-4.5 shrink-0 ${
+                    isActive ? "text-sky-400" : "text-slate-500 group-hover:text-sky-400 transition-colors"
+                  }`}
+                />
               ) : (
-                <GraphIcon className="h-4 w-4 shrink-0" />
+                <GraphIcon
+                  className={`h-4.5 w-4.5 shrink-0 ${
+                    isActive ? "text-sky-400" : "text-slate-500 group-hover:text-sky-400 transition-colors"
+                  }`}
+                />
               )}
-              {!collapsed && <span>{item.label}</span>}
+              {!collapsed && (
+                <div className="flex flex-col min-w-0">
+                  <span className="font-semibold leading-normal truncate">{item.label}</span>
+                  {item.description && (
+                    <span className="text-[10px] text-slate-500 truncate leading-none mt-0.5">
+                      {item.description}
+                    </span>
+                  )}
+                </div>
+              )}
             </Link>
           );
         })}
       </nav>
 
       {!collapsed && studentName && (
-        <div className="border-t border-notion-border p-3">
-          <p className="truncate text-xs text-notion-text-secondary">
-            {studentName}
-          </p>
+        <div className="border-t border-slate-900/60 p-4">
+          <div className="rounded-xl bg-slate-950/30 border border-slate-900/80 px-3.5 py-3">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
+              Alumno
+            </p>
+            <p className="mt-1 truncate text-xs font-semibold text-slate-300">
+              {studentName}
+            </p>
+          </div>
         </div>
       )}
     </aside>

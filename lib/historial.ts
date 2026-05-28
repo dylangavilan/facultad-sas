@@ -1,5 +1,6 @@
 import type { Materia, Situacion, HistorialResponse } from "@/types/historial";
-import historialData from "@/data/historial.json";
+import ingenieriaData from "@/data/historial.json";
+import analistaData from "@/data/analista.json";
 
 export function isAprobada(situacion: Situacion): boolean {
   return ["PROMOCIONA", "APROBADO", "EQUIV_INTERNA"].includes(situacion);
@@ -19,7 +20,9 @@ export interface ResumenMaterias {
   aFinalPrevio: number;
 }
 
-export function contarMateriasPorSituacion(materias: Materia[]): ResumenMaterias {
+export function contarMateriasPorSituacion(
+  materias: Materia[],
+): ResumenMaterias {
   let aprobadas = 0;
   let aFinalPrevio = 0;
   let pendientes = 0;
@@ -35,7 +38,7 @@ export function contarMateriasPorSituacion(materias: Materia[]): ResumenMaterias
 
 export function filtrarMaterias(
   materias: Materia[],
-  filter: "aprobadas" | "pendientes" | "todas"
+  filter: "aprobadas" | "pendientes" | "todas",
 ): Materia[] {
   if (filter === "aprobadas") {
     return materias.filter((m) => isAprobada(m.situacion));
@@ -47,9 +50,9 @@ export function filtrarMaterias(
 }
 
 export function getHistorial(
-  filter?: "aprobadas" | "pendientes"
+  filter?: "aprobadas" | "pendientes",
 ): HistorialResponse {
-  const data = historialData as HistorialResponse;
+  const data = analistaData as HistorialResponse;
   const materias = filter
     ? filtrarMaterias(data.materias, filter)
     : data.materias;
@@ -74,4 +77,9 @@ export const LABEL_AÑO: Record<string, string> = {
   QUINTO_AÑO: "Quinto año",
   OPTATIVAS: "Optativas",
   ANEXO: "Anexo",
+};
+
+export const LABEL_CUATRIMESTRE: Record<1 | 2, string> = {
+  1: "1.er cuatrimestre",
+  2: "2.º cuatrimestre",
 };

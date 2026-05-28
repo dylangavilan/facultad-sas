@@ -1,0 +1,16 @@
+
+> facultad-sas@0.1.0 dev
+> next dev
+
+  ▲ Next.js 14.2.35
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ✓ Ready in 23.8s
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 26.8s (512 modules)
+ GET /historial 404 in 27643ms
+ ✓ Compiled in 981ms (264 modules)
+ ○ Compiling /grafo ...
+ ✓ Compiled /grafo in 6.5s (834 modules)
+ GET /grafo 200 in 6940ms

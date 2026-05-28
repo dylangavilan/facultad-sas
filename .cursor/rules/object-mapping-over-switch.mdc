@@ -1,0 +1,45 @@
+---
+description: Prefer object mappings over switch statements for type-based lookups
+globs: "**/*.ts"
+alwaysApply: true
+---
+
+# Object mapping over switch
+
+Cuando tengas que mapear un valor (tipo, string, enum) a otro (string, componente, función), usa **mapeos con objetos** en lugar de `switch`.
+
+## Patrón
+
+```typescript
+// ❌ Evitar switch para lookups
+function getColor(type: string): string {
+  switch (type) {
+    case "A":
+    case "B":
+      return "#22c55e";
+    case "C":
+      return "#f59e0b";
+    default:
+      return "#9ca3af";
+  }
+}
+
+// ✅ Usar Record / objeto + lookup
+const TYPE_COLOR: Record<string, string> = {
+  A: "#22c55e",
+  B: "#22c55e",
+  C: "#f59e0b",
+};
+const DEFAULT_COLOR = "#9ca3af";
+
+function getColor(type: string): string {
+  return TYPE_COLOR[type] ?? DEFAULT_COLOR;
+}
+```
+
+## Ventajas
+
+- Más declarativo y fácil de extender
+- Un solo lugar para definir el mapeo
+- Menos verbosidad, sin repetición de `case`/`return`
+- Mejor para árbol-shaking y optimización

@@ -2,8 +2,8 @@
   "student": {
     "nombre": "GAVILAN, DYLAN NEHUEN",
     "lu": "1181713",
-    "plan": "ING. EN INFORMÁTICA",
-    "planCodigo": "1621",
+    "plan": "ANALISTA EN INFORMÁTICA",
+    "planCodigo": "1621-AI",
     "documento": "43581083",
     "fechaNacimiento": "08/07/2001"
   },
@@ -210,7 +210,7 @@
       "situacion": "PENDIENTE",
       "año": "TERCER_AÑO",
       "correlativas": ["3.4.207", "3.4.074", "3.4.209"],
-      "cuatrimestre": 2
+      "cuatrimestre": 1
     },
     {
       "codigo": "3.4.212",
@@ -219,7 +219,7 @@
       "situacion": "EQUIV_INTERNA",
       "año": "TERCER_AÑO",
       "correlativas": ["3.4.078"],
-      "cuatrimestre": 2
+      "cuatrimestre": 1
     },
     {
       "codigo": "3.4.213",
@@ -246,242 +246,14 @@
       "situacion": "PENDIENTE",
       "año": "TERCER_AÑO",
       "cuatrimestre": 1
-    },
-    {
-      "codigo": "3.4.082",
-      "nombre": "APLICACIONES INTERACTIVAS",
-      "horas": 68,
-      "situacion": "PENDIENTE",
-      "año": "TERCER_AÑO",
-      "correlativas": ["3.4.208"],
-      "cuatrimestre": 2
-    },
-    {
-      "codigo": "3.4.214",
-      "nombre": "INGENIERÍA DE SOFTWARE",
-      "horas": 68,
-      "situacion": "PENDIENTE",
-      "año": "TERCER_AÑO",
-      "correlativas": ["3.4.207"],
-      "cuatrimestre": 1
-    },
-    {
-      "codigo": "3.1.055",
-      "nombre": "FÍSICA II",
-      "horas": 119,
-      "situacion": "PENDIENTE",
-      "año": "TERCER_AÑO",
-      "correlativas": ["3.1.052"],
-      "cuatrimestre": 2
-    },
-    {
-      "codigo": "3.4.215",
-      "nombre": "TEORÍA DE LA COMPUTACIÓN",
-      "horas": 102,
-      "situacion": "PENDIENTE",
-      "año": "TERCER_AÑO",
-      "correlativas": ["3.1.024", "3.4.077"],
-      "cuatrimestre": 2
-    },
-    {
-      "codigo": "3.1.056",
-      "nombre": "ESTADÍSTICA AVANZADA",
-      "horas": 68,
-      "situacion": "PENDIENTE",
-      "año": "TERCER_AÑO",
-      "correlativas": ["3.1.049"],
-      "cuatrimestre": 2
-    },
-    {
-      "codigo": "3.4.216",
-      "nombre": "DESARROLLO DE APLICACIONES I",
-      "horas": 108,
-      "situacion": "PENDIENTE",
-      "año": "CUARTO_AÑO",
-      "correlativas": ["3.4.210"],
-      "cuatrimestre": 1
-    },
-    {
-      "codigo": "3.4.089",
-      "nombre": "DIRECCION DE PROY. INFOR.",
-      "horas": 68,
-      "situacion": "PENDIENTE",
-      "año": "CUARTO_AÑO",
-      "correlativas": ["3.4.207"],
-      "cuatrimestre": 1
-    },
-    {
-      "codigo": "3.4.217",
-      "nombre": "CIENCIA DE DATOS",
-      "horas": 68,
-      "situacion": "PENDIENTE",
-      "año": "CUARTO_AÑO",
-      "correlativas": ["3.1.049", "3.4.213"],
-      "cuatrimestre": 1
-    },
-    {
-      "codigo": "3.4.092",
-      "nombre": "SEG. E INTEG. DE LA INF.",
-      "horas": 68,
-      "situacion": "PENDIENTE",
-      "año": "CUARTO_AÑO",
-      "correlativas": ["3.4.212"],
-      "cuatrimestre": 1
-    },
-    {
-      "codigo": "3.1.025",
-      "nombre": "MODELADO Y SIMULACIÓN",
-      "horas": 68,
-      "situacion": "PENDIENTE",
-      "año": "CUARTO_AÑO",
-      "correlativas": ["3.1.054"],
-      "cuatrimestre": 1
-    },
-    {
-      "codigo": "3.4.218",
-      "nombre": "DESARROLLO DE APLICACIONES II",
-      "horas": 168,
-      "situacion": "PENDIENTE",
-      "año": "CUARTO_AÑO",
-      "correlativas": ["3.4.082", "3.4.210"],
-      "cuatrimestre": 2
-    },
-    {
-      "codigo": "3.4.086",
-      "nombre": "EVAL. DE PROY. INFORMATICOS",
-      "horas": 68,
-      "situacion": "PENDIENTE",
-      "año": "CUARTO_AÑO",
-      "correlativas": ["3.1.049"],
-      "cuatrimestre": 2
-    },
-    {
-      "codigo": "3.4.096",
-      "nombre": "INTELIGENCIA ARTIFICIAL",
-      "horas": 68,
-      "situacion": "PENDIENTE",
-      "año": "CUARTO_AÑO",
-      "correlativas": ["3.1.056"],
-      "cuatrimestre": 2
-    },
-    {
-      "codigo": "3.4.219",
-      "nombre": "TECNOLOGÍA Y MEDIO AMBIENTE",
-      "horas": 68,
-      "situacion": "PENDIENTE",
-      "año": "CUARTO_AÑO",
-      "cuatrimestre": 2
-    },
-    {
-      "codigo": "PPS06",
-      "nombre": "PRÁCTICA PROFESIONAL SUPERVISADA",
-      "horas": 200,
-      "situacion": "PENDIENTE",
-      "año": "CUARTO_AÑO",
-      "cuatrimestre": 2
-    },
-    {
-      "codigo": "3.4.094",
-      "nombre": "ARQUITECTURA DE APLICACIONES",
-      "horas": 68,
-      "situacion": "PENDIENTE",
-      "año": "QUINTO_AÑO",
-      "correlativas": ["3.4.207"],
-      "cuatrimestre": 1
-    },
-    {
-      "codigo": "3.4.220",
-      "nombre": "TENDENCIAS TECNOLÓGICAS",
-      "horas": 68,
-      "situacion": "PENDIENTE",
-      "año": "QUINTO_AÑO",
-      "cuatrimestre": 1
-    },
-    {
-      "codigo": "3.4.100",
-      "nombre": "PROY. FIN. ING. INFORM.",
-      "horas": 300,
-      "situacion": "PENDIENTE",
-      "año": "QUINTO_AÑO",
-      "cuatrimestre": 2
-    },
-    {
-      "codigo": "3.4.098",
-      "nombre": "CALIDAD DE SOFTWARE",
-      "horas": 68,
-      "situacion": "PENDIENTE",
-      "año": "QUINTO_AÑO",
-      "correlativas": ["3.4.214"],
-      "cuatrimestre": 1
-    },
-    {
-      "codigo": "3.4.221",
-      "nombre": "NEGOCIOS TECNOLÓGICOS",
-      "horas": 68,
-      "situacion": "PENDIENTE",
-      "año": "QUINTO_AÑO",
-      "cuatrimestre": 1
-    },
-    {
-      "codigo": "3.4.135",
-      "nombre": "TECNOLOGÍA E INNOVACIÓN",
-      "horas": 68,
-      "situacion": "PENDIENTE",
-      "año": "QUINTO_AÑO",
-      "cuatrimestre": 2
-    },
-    {
-      "codigo": "2.3.056",
-      "nombre": "DERECHO INFORMATICO",
-      "horas": 68,
-      "situacion": "PENDIENTE",
-      "año": "QUINTO_AÑO",
-      "cuatrimestre": 2
-    },
-    {
-      "codigo": "1.2.001",
-      "nombre": "MARKETING",
-      "horas": 68,
-      "situacion": "PROMOCIONA",
-      "nota": 9,
-      "año": "OPTATIVAS",
-      "cuatrimestre": 1
-    },
-    {
-      "codigo": "3.4.226",
-      "nombre": "DISEÑO Y DESARROLLO WEB",
-      "horas": 68,
-      "situacion": "PROMOCIONA",
-      "nota": 8,
-      "año": "OPTATIVAS",
-      "cuatrimestre": 2
-    },
-    {
-      "codigo": "3.4.225",
-      "nombre": "INTRODUCCIÓN A LA ALGORITMIA",
-      "horas": 68,
-      "situacion": "APROBADO",
-      "nota": 6,
-      "año": "ANEXO",
-      "cuatrimestre": 1
-    },
-    {
-      "codigo": "3.4.227",
-      "nombre": "ALGORITMOS Y ESTRUCTURAS DE DATOS I",
-      "horas": 68,
-      "situacion": "APROBADO",
-      "nota": 8,
-      "año": "ANEXO",
-      "cuatrimestre": 2
-    },
-    {
-      "codigo": "3.4.230",
-      "nombre": "REDES DE DATOS",
-      "horas": 68,
-      "situacion": "APROBADO",
-      "nota": 7,
-      "año": "ANEXO",
-      "cuatrimestre": 2
     }
-  ]
+  ],
+  "tituloIntermedio": {
+    "nombre": "ANALISTA EN INFORMÁTICA",
+    "requisitos": [
+      "Aprobación de materias hasta el primer cuatrimestre de tercer año",
+      "Cumplimiento de correlativas",
+      "Examen de Inglés aprobado"
+    ]
+  }
 }
